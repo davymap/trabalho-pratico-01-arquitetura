@@ -34,15 +34,16 @@ class Aluno:
     def __init__(self, nome, matricula, rua, numero, cidade):
         self.nome = nome
         self.matricula = matricula
-        # composição: o endereço é criado junto com o aluno
+
+        # Composição: o endereço é criado junto com o aluno.
         self.endereco = Endereco(rua, numero, cidade)
 
     def mostrar_info(self):
         return f"{self.nome} - Matrícula: {self.matricula}"
 
     def remover(self):
-        # o endereço não some junto com o aluno, ele é devolvido
-        # para poder ser usado em outro lugar (ex: relatórios)
+        # O endereço não some junto com o aluno: ele é devolvido
+        # para poder continuar sendo usado em outro contexto.
         endereco = self.endereco
         self.endereco = None
         return endereco
@@ -55,22 +56,26 @@ class Escola:
         self.professores = []
 
     def adicionar_sala(self, numero, capacidade):
-        # composição: a própria escola cria a sala
+        # Composição: a própria escola cria a sala.
         sala = SalaAula(numero, capacidade)
         self.salas.append(sala)
 
     def adicionar_professor(self, professor):
-        # agregação: o professor já existe, a escola só recebe ele
+        # Agregação: o professor já existe, e a escola apenas o associa.
         if professor not in self.professores:
             self.professores.append(professor)
             professor.adicionar_escola(self)
 
     def fechar(self):
-        # as salas deixam de existir, mas os professores continuam
+        # As salas deixam de existir dentro da escola,
+        # mas os professores continuam existindo.
         self.salas.clear()
+
         for professor in self.professores:
             professor.escolas.remove(self)
+
         self.professores.clear()
+
         print(f"A escola {self.nome} fechou.")
 
     def mostrar_info(self):
@@ -78,6 +83,7 @@ class Escola:
 
 
 # ---------- teste ----------
+
 escola = Escola("Escola Municipal Central")
 
 escola.adicionar_sala(1, 30)
@@ -86,7 +92,13 @@ escola.adicionar_sala(2, 25)
 professor = Professor("Carlos Silva", "Matemática")
 escola.adicionar_professor(professor)
 
-aluno = Aluno("João Santos", "2026001", "Rua Principal", 100, "Viçosa do Ceará")
+aluno = Aluno(
+    "João Santos",
+    "2026001",
+    "Rua Principal",
+    100,
+    "Viçosa do Ceará"
+)
 
 print(escola.mostrar_info())
 
@@ -98,11 +110,15 @@ print(aluno.mostrar_info())
 print(aluno.endereco.mostrar_endereco())
 
 print()
+
 escola.fechar()
+
 print("Salas depois de fechar:", len(escola.salas))
 print("Professor continua existindo:", professor.mostrar_info())
 print("Escolas do professor:", len(professor.escolas))
 
 print()
+
 endereco_sobrando = aluno.remover()
+
 print("Endereço que sobrou:", endereco_sobrando.mostrar_endereco())
