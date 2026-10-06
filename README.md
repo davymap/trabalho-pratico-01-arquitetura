@@ -24,9 +24,9 @@ python main.py
 
 Uma sala de aula não faz sentido sem a escola. Se a escola fechar, as salas deixam de existir no sistema. No código, quem cria a sala é a própria `Escola`, por meio do método `adicionar_sala`. Quando o método `fechar` é chamado, as salas são apagadas. Por isso, essa relação foi classificada como composição.
 
-### Professor e Escola: Agregação
+### Professor e Escola: Associação
 
-Um professor pode lecionar em várias escolas e uma escola pode ter vários professores. A existência de um não depende da existência do outro. No código, o professor é criado separadamente e depois associado à escola por meio do método `adicionar_professor`. Quando a escola fecha, o professor continua existindo normalmente. Por isso, essa relação foi classificada como agregação.
+Um professor pode lecionar em várias escolas e uma escola pode ter vários professores. A existência de um não depende da existência do outro. No código, o professor é criado separadamente e depois associado à escola por meio do método `adicionar_professor`. Quando a escola fecha, o professor continua existindo normalmente. Por isso, essa relação foi classificada como associação.
 
 ### Aluno e Endereco: Agregação
 
@@ -76,11 +76,13 @@ classDiagram
     }
 
     Escola "1" *-- "*" SalaAula : composição
-    Escola "*" o-- "*" Professor : agregação
+    Escola "*" -- "*" Professor : associação
     Aluno "1" o-- "1" Endereco : agregação
 ```
 
 ### Legenda
+
+`--` representa uma associação.
 
 `*--` representa o losango preenchido, utilizado para composição.
 
